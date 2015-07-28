@@ -105,5 +105,6 @@ function below(painter1, painter2) {
 var f = {"origin":new Vector(30, 30), "edge1":new Vector(200, 0), "edge2":new Vector(0, 200)}; // frame定义
 // 方便测试用的画图函数
 function paint(painter) {
+	convas.width = convas.width; // reset convas
 	painter(f);
 }
