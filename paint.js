@@ -92,6 +92,16 @@ function beside(painter1, painter2) {
 	};
 }
 
+function below(painter1, painter2) {
+	var split_point = new Vector(0, 0.5);
+	var paint_up = trans_painter(painter2, new Vector(0, 0), new Vector(1.0, 0), split_point);
+	var paint_down = trans_painter(painter1, split_point, new Vector(1.0, 0.5), new Vector(0, 1.0));
+	return function(frame) {
+		paint_down(frame);
+		paint_up(frame);
+	};
+}
+
 var f = {"origin":new Vector(30, 30), "edge1":new Vector(200, 0), "edge2":new Vector(0, 200)}; // frame定义
 // 方便测试用的画图函数
 function paint(painter) {
