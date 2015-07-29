@@ -55,7 +55,7 @@ var diamond = seg_to_painter([
 	]);
 
 /////////////////
-//画线段/////////
+//////画线段/////
 /////////////////
 function draw_line(v1, v2) {
 	context.moveTo(v1.x, v1.y);
@@ -78,7 +78,12 @@ function trans_painter(painter, origin, edge1, edge2) {
 }
 // 将图片垂直翻转
 function flip_vert(painter) {
-	trans_painter(painter, new Vector(0, 1), new Vector(0, 0), new Vector(1, 1));
+	return trans_painter(painter, new Vector(0, 1), new Vector(1, 1), new Vector(0, 0));
+}
+
+// 将图片水平翻转
+function flip_horiz(painter) {
+	return trans_painter(painter, new Vector(1, 0), new Vector(0, 0), new Vector(1, 1));
 }
 
 // 将两张图片左右放置
@@ -136,6 +141,12 @@ function corner_split(painter, n) {
 		var bottom_right = below(right, right);
 		return beside(below(painter, top_left), below(bottom_right, corner));
 	}
+}
+
+function square_limit(painter, n) {
+	var corner = corner_split(painter, n);
+	var half = beside(flip_horiz(corner), corner);
+	return below(flip_vert(half), half);	
 }
 
 var f = {"origin":new Vector(30, 30), "edge1":new Vector(200, 0), "edge2":new Vector(0, 200)}; // frame定义
