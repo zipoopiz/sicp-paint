@@ -124,6 +124,20 @@ function up_split(painter, n) {
 	}
 }
 
+// 递归的图形构造， 将图形放在frame的四个地方， 原图放在左下角， 左上角是up_split, 右上角是corner_split， 右下角是right_split
+function corner_split(painter, n) {
+	if (n === 0) {
+		return painter;
+	} else {
+		var up = up_split(painter, n - 1);
+		var right = right_split(painter, n - 1);
+		var corner = corner_split(painter, n - 1);
+		var top_left = beside(up, up);
+		var bottom_right = below(right, right);
+		return beside(below(painter, top_left), below(bottom_right, corner));
+	}
+}
+
 var f = {"origin":new Vector(30, 30), "edge1":new Vector(200, 0), "edge2":new Vector(0, 200)}; // frame定义
 // 方便测试用的画图函数
 function paint(painter) {
