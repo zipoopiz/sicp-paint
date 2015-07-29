@@ -92,6 +92,7 @@ function beside(painter1, painter2) {
 	};
 }
 
+// 将两张图片上下放置
 function below(painter1, painter2) {
 	var split_point = new Vector(0, 0.5);
 	var paint_up = trans_painter(painter2, new Vector(0, 0), new Vector(1.0, 0), split_point);
@@ -100,6 +101,27 @@ function below(painter1, painter2) {
 		paint_down(frame);
 		paint_up(frame);
 	};
+}
+
+// 递归的图形构造， 将图形分成相等的两部分， 一上一下放在原图的右边
+function right_split(painter, n) {
+	if (n === 0) {
+		return painter;
+	} else {
+		var smaller = right_split(painter, n - 1);
+		return beside(painter, below(smaller, smaller));
+	}
+}
+
+
+// 递归的图形构造， 将图形分成相等的两部分， 一左一右放在原图的上边
+function up_split(painter, n) {
+	if (n === 0) {
+		return painter;
+	} else {
+		var smaller = up_split(painter, n - 1);
+		return below(painter, beside(smaller, smaller));
+	}
 }
 
 var f = {"origin":new Vector(30, 30), "edge1":new Vector(200, 0), "edge2":new Vector(0, 200)}; // frame定义
